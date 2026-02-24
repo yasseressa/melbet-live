@@ -1,0 +1,37 @@
+{
+  "name": "milbet-sports-pro",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "db:seed": "ts-node --transpile-only prisma/seed.ts",
+    "db:sync": "ts-node --transpile-only scripts/sync-football-data.ts",
+    "db:sync:news": "ts-node --transpile-only scripts/sync-football-news.ts",
+    "db:sync:all": "npm run db:sync && npm run db:sync:news"
+  },
+  "dependencies": {
+    "@prisma/adapter-mariadb": "^7.4.0",
+    "@prisma/client": "^7.4.0",
+    "clsx": "^2.1.1",
+    "hls.js": "^1.5.15",
+    "mysql2": "^3.11.0",
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "shaka-player": "^4.12.8"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "prisma": "^7.4.0",
+    "tailwindcss": "^3.4.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}

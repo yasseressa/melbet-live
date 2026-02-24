@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #0E0E0E;
+}
+
+a { text-decoration: none; }
+
+/* nicer focus */
+:focus-visible {
+  outline: 2px solid #FFC400;
+  outline-offset: 2px;
+}
