@@ -13,7 +13,7 @@ export async function upsertSocial(formData: FormData) {
   const url = String(formData.get("url") || "");
   const enabled = String(formData.get("enabled") || "") === "on";
 
-  if (!kind || !url) return { ok: false };
+  if (!kind || !url) return;
 
   await prisma.socialLink.upsert({
     where: { kind: kind as any },
@@ -22,7 +22,6 @@ export async function upsertSocial(formData: FormData) {
   });
 
   revalidateLocalizedLayouts();
-  return { ok: true };
 }
 
 export async function createPopup(formData: FormData) {
@@ -31,16 +30,14 @@ export async function createPopup(formData: FormData) {
   const url = String(formData.get("url") || "");
   const sort = Number(formData.get("sort") || 0);
   const enabled = String(formData.get("enabled") || "") === "on";
-  if (!titleAr || !url) return { ok: false };
+  if (!titleAr || !url) return;
   await prisma.popupLink.create({ data: { titleAr, titleEn: titleEn || null, url, sort, enabled } });
   revalidateLocalizedLayouts();
-  return { ok: true };
 }
 
 export async function deletePopup(formData: FormData) {
   const id = String(formData.get("id") || "");
-  if (!id) return { ok: false };
+  if (!id) return;
   await prisma.popupLink.delete({ where: { id } });
   revalidateLocalizedLayouts();
-  return { ok: true };
 }

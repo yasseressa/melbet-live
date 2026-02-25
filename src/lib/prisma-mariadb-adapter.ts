@@ -10,7 +10,7 @@ function installAivenMariadbPoolShim() {
   const originalCreatePool = mariadb.createPool.bind(mariadb);
 
   (mariadb as typeof mariadb & { createPool: typeof mariadb.createPool }).createPool = (
-    config: mariadb.PoolConfig,
+    config: string | mariadb.PoolConfig,
   ) => {
     const shouldShim =
       typeof config === "object" &&

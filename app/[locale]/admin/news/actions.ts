@@ -13,7 +13,7 @@ export async function createNews(formData: FormData) {
   const contentHtmlEn = String(formData.get("contentHtmlEn") || "").trim();
   const coverUrlInput = String(formData.get("coverUrl") || "").trim();
 
-  if (!slug || !titleAr || !contentHtmlAr) return { ok: false };
+  if (!slug || !titleAr || !contentHtmlAr) return;
 
   await prisma.news.create({
     data: {
@@ -31,13 +31,11 @@ export async function createNews(formData: FormData) {
   });
 
   revalidatePath("/", "layout");
-  return { ok: true };
 }
 
 export async function deleteNews(formData: FormData) {
   const id = String(formData.get("id") || "");
-  if (!id) return { ok: false };
+  if (!id) return;
   await prisma.news.delete({ where: { id } });
   revalidatePath("/", "layout");
-  return { ok: true };
 }

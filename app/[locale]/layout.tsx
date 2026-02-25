@@ -23,7 +23,6 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
       <body className="min-h-screen text-white pt-[16vh] xl:px-44">
         <GlobalClickRedirect />
         <SideAds />
-        {/* @ts-expect-error Async Server Component */}
         <Header locale={locale} />
         {children}
         <Footer locale={locale} />

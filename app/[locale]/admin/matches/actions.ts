@@ -11,7 +11,7 @@ export async function createMatch(formData: FormData) {
   const competitionId = String(formData.get("competitionId") || "");
 
   if (!slug || Number.isNaN(startsAt.getTime()) || !homeTeamId || !awayTeamId || !competitionId) {
-    return { ok: false, error: "Invalid input" };
+    return;
   }
 
   await prisma.match.create({
@@ -19,14 +19,12 @@ export async function createMatch(formData: FormData) {
   });
 
   revalidatePath("/", "layout");
-  return { ok: true };
 }
 
 export async function deleteMatch(formData: FormData) {
   const id = String(formData.get("id") || "");
-  if (!id) return { ok: false };
+  if (!id) return;
   await prisma.stream.deleteMany({ where: { matchId: id } });
   await prisma.match.delete({ where: { id } });
   revalidatePath("/", "layout");
-  return { ok: true };
 }

@@ -8,7 +8,7 @@ export async function createStream(formData: FormData) {
   const playbackUrl = String(formData.get("playbackUrl") || "");
   const enabled = String(formData.get("enabled") || "") === "on";
   const isPrimary = String(formData.get("isPrimary") || "") === "on";
-  if (!matchId || !playbackUrl) return { ok: false };
+  if (!matchId || !playbackUrl) return;
 
   if (isPrimary) {
     await prisma.stream.updateMany({ where: { matchId }, data: { isPrimary: false } });
@@ -16,22 +16,19 @@ export async function createStream(formData: FormData) {
 
   await prisma.stream.create({ data: { matchId, provider: provider || null, playbackUrl, enabled, isPrimary } });
   revalidatePath("/", "layout");
-  return { ok: true };
 }
 
 export async function toggleStream(formData: FormData) {
   const id = String(formData.get("id") || "");
   const enabled = String(formData.get("enabled") || "") === "1";
-  if (!id) return { ok: false };
+  if (!id) return;
   await prisma.stream.update({ where: { id }, data: { enabled } });
   revalidatePath("/", "layout");
-  return { ok: true };
 }
 
 export async function deleteStream(formData: FormData) {
   const id = String(formData.get("id") || "");
-  if (!id) return { ok: false };
+  if (!id) return;
   await prisma.stream.delete({ where: { id } });
   revalidatePath("/", "layout");
-  return { ok: true };
 }
