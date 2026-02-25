@@ -82,7 +82,7 @@ export default async function Header({ locale }: { locale: Locale }) {
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur">
       <Link href={`/${locale}`} className="block w-full">
         <Image
-          src="/brand/melbet-logo.jpg"
+          src="/brand/melbet-logo.png"
           alt="Melbet"
           width={1400}
           height={500}

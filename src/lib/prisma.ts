@@ -1,5 +1,5 @@
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "@prisma/client";
+import { createPrismaMariaDbAdapter } from "./prisma-mariadb-adapter";
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
@@ -8,7 +8,7 @@ if (!databaseUrl) {
   throw new Error("DATABASE_URL is not set");
 }
 
-const adapter = new PrismaMariaDb(databaseUrl);
+const adapter = createPrismaMariaDbAdapter(databaseUrl);
 
 export const prisma =
   globalForPrisma.prisma ??

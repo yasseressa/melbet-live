@@ -1,13 +1,13 @@
 import "dotenv/config";
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient, SocialKind, MatchStatus } from "@prisma/client";
+import { createPrismaMariaDbAdapter } from "../src/lib/prisma-mariadb-adapter";
 
 const databaseUrl = process.env.DATABASE_URL;
 if (!databaseUrl) {
   throw new Error("DATABASE_URL is not set");
 }
 
-const adapter = new PrismaMariaDb(databaseUrl);
+const adapter = createPrismaMariaDbAdapter(databaseUrl);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {

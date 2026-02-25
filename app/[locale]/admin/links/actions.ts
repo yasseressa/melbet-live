@@ -2,6 +2,12 @@
 import { prisma } from "@/src/lib/prisma";
 import { revalidatePath } from "next/cache";
 
+function revalidateLocalizedLayouts() {
+  revalidatePath("/ar", "layout");
+  revalidatePath("/en", "layout");
+  revalidatePath("/", "layout");
+}
+
 export async function upsertSocial(formData: FormData) {
   const kind = String(formData.get("kind") || "");
   const url = String(formData.get("url") || "");
@@ -15,7 +21,7 @@ export async function upsertSocial(formData: FormData) {
     create: { kind: kind as any, url, enabled },
   });
 
-  revalidatePath("/", "layout");
+  revalidateLocalizedLayouts();
   return { ok: true };
 }
 
@@ -27,7 +33,7 @@ export async function createPopup(formData: FormData) {
   const enabled = String(formData.get("enabled") || "") === "on";
   if (!titleAr || !url) return { ok: false };
   await prisma.popupLink.create({ data: { titleAr, titleEn: titleEn || null, url, sort, enabled } });
-  revalidatePath("/", "layout");
+  revalidateLocalizedLayouts();
   return { ok: true };
 }
 
@@ -35,6 +41,6 @@ export async function deletePopup(formData: FormData) {
   const id = String(formData.get("id") || "");
   if (!id) return { ok: false };
   await prisma.popupLink.delete({ where: { id } });
-  revalidatePath("/", "layout");
+  revalidateLocalizedLayouts();
   return { ok: true };
 }
