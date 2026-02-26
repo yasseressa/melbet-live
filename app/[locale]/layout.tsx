@@ -13,6 +13,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     description: locale === "ar"
       ? "مباريات، أخبار، وصفحات بث."
       : "Matches, news, and streaming pages.",
+    icons: {
+      icon: "/brand/melbet-logo.png",
+      shortcut: "/brand/melbet-logo.png",
+      apple: "/brand/melbet-logo.png",
+    },
   };
 }
 
