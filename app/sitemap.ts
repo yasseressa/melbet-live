@@ -1,5 +1,7 @@
 import { prisma } from "@/src/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 function baseUrl() {
   return process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 }
@@ -7,10 +9,17 @@ function baseUrl() {
 export default async function sitemap() {
   const base = baseUrl();
 
-  const [matches, news] = await Promise.all([
-    prisma.match.findMany({ select: { slug: true, updatedAt: true } }),
-    prisma.news.findMany({ select: { slug: true, publishedAt: true } }),
-  ]);
+  let matches: Array<{ slug: string; updatedAt: Date }> = [];
+  let news: Array<{ slug: string; publishedAt: Date }> = [];
+
+  try {
+    [matches, news] = await Promise.all([
+      prisma.match.findMany({ select: { slug: true, updatedAt: true } }),
+      prisma.news.findMany({ select: { slug: true, publishedAt: true } }),
+    ]);
+  } catch (error) {
+    console.error("sitemap db fetch failed", error);
+  }
 
   const staticUrls = [
     { url: `${base}/ar`, lastModified: new Date() },
