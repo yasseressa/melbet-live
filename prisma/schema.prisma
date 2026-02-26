@@ -100,13 +100,13 @@ model News {
   id            String   @id @default(cuid())
   slug          String   @unique
   sourceLang    NewsLang @default(EN)
-  titleAr       String
-  titleEn       String?
-  excerptAr     String?
-  excerptEn     String?
-  contentHtmlAr String
-  contentHtmlEn String?
-  coverUrl      String?
+  titleAr       String   @db.VarChar(512)
+  titleEn       String?  @db.VarChar(512)
+  excerptAr     String?  @db.Text
+  excerptEn     String?  @db.Text
+  contentHtmlAr String   @db.LongText
+  contentHtmlEn String?  @db.LongText
+  coverUrl      String?  @db.Text
   publishedAt   DateTime @default(now())
   categoryId    String?
 

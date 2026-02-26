@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { createHash } from "node:crypto";
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { NewsLang, PrismaClient } from "@prisma/client";
+import { createPrismaMariaDbAdapter } from "../src/lib/prisma-mariadb-adapter.ts";
 
 type NewsArticle = {
   title: string;
@@ -38,7 +38,7 @@ const country = process.env.FOOTBALL_NEWS_COUNTRY || "";
 const max = Number(process.env.FOOTBALL_NEWS_MAX || 20);
 const daysBack = Number(process.env.FOOTBALL_NEWS_DAYS_BACK || 2);
 
-const adapter = new PrismaMariaDb(databaseUrl);
+const adapter = createPrismaMariaDbAdapter(databaseUrl);
 const prisma = new PrismaClient({ adapter, log: ["error", "warn"] });
 
 function addDays(date: Date, days: number) {

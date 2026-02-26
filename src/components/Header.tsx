@@ -117,7 +117,7 @@ export default async function Header({ locale }: { locale: Locale }) {
 
           <div className="flex items-center gap-2 flex-wrap justify-end">
             {social.map((s) => (
-              <Button key={s.kind} href={s.url} variant="social" className={socialButtonClass(s.kind)}>
+              <Button key={s.kind} href={s.url} openInNewTab variant="social" className={socialButtonClass(s.kind)}>
                 <span className="inline-flex items-center gap-2">
                   <SocialIcon kind={s.kind} />
                   <span>{socialLabel(s.kind, locale)}</span>

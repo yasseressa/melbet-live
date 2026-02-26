@@ -1,15 +1,18 @@
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+import { createRequire } from "node:module";
 import * as mariadb from "mariadb";
 
 let aivenPoolShimInstalled = false;
+const require = createRequire(import.meta.url);
+const mariadbMutable = require("mariadb") as typeof mariadb;
 
 function installAivenMariadbPoolShim() {
   if (aivenPoolShimInstalled) return;
   aivenPoolShimInstalled = true;
 
-  const originalCreatePool = mariadb.createPool.bind(mariadb);
+  const originalCreatePool = mariadbMutable.createPool.bind(mariadbMutable);
 
-  (mariadb as typeof mariadb & { createPool: typeof mariadb.createPool }).createPool = (
+  (mariadbMutable as typeof mariadb & { createPool: typeof mariadb.createPool }).createPool = (
     config: string | mariadb.PoolConfig,
   ) => {
     const shouldShim =
@@ -26,7 +29,7 @@ function installAivenMariadbPoolShim() {
     // against some managed MySQL providers (Aiven here). Single connections work.
     return {
       async query(query: unknown, values?: unknown) {
-        const conn = await mariadb.createConnection(config);
+        const conn = await mariadbMutable.createConnection(config);
         try {
           return await (conn as unknown as { query: (q: unknown, v?: unknown) => Promise<unknown> }).query(
             query,
@@ -37,7 +40,7 @@ function installAivenMariadbPoolShim() {
         }
       },
       async getConnection() {
-        return mariadb.createConnection(config);
+        return mariadbMutable.createConnection(config);
       },
       async end() {
         return;

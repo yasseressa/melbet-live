@@ -20,12 +20,14 @@ export function CardHeader({ title, subtitle }: { title: string; subtitle?: stri
 export function Button({
   children,
   href,
+  openInNewTab = false,
   variant = "primary",
   type = "button",
   className,
 }: {
   children: React.ReactNode;
   href?: string;
+  openInNewTab?: boolean;
   variant?: "primary" | "ghost" | "social";
   type?: "button" | "submit";
   className?: string;
@@ -37,7 +39,13 @@ export function Button({
     variant === "social" && "border",
     className
   );
-  if (href) return <a className={cls} href={href}>{children}</a>;
+  if (href) {
+    return (
+      <a className={cls} href={href} target={openInNewTab ? "_blank" : undefined} rel={openInNewTab ? "noopener noreferrer" : undefined}>
+        {children}
+      </a>
+    );
+  }
   return <button className={cls} type={type}>{children}</button>;
 }
 

@@ -1,6 +1,6 @@
 import "dotenv/config";
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { MatchStatus, PrismaClient } from "@prisma/client";
+import { createPrismaMariaDbAdapter } from "../src/lib/prisma-mariadb-adapter.ts";
 
 type ApiTeam = {
   id: number;
@@ -50,7 +50,7 @@ const competitionCodes = (process.env.FOOTBALL_DATA_COMPETITIONS || "PL,PD,SA,BL
 const daysPast = Number(process.env.FOOTBALL_DATA_DAYS_PAST || 0);
 const daysFuture = Number(process.env.FOOTBALL_DATA_DAYS_FUTURE || 7);
 
-const adapter = new PrismaMariaDb(databaseUrl);
+const adapter = createPrismaMariaDbAdapter(databaseUrl);
 const prisma = new PrismaClient({ adapter, log: ["error", "warn"] });
 
 function hasArabic(text: string) {
