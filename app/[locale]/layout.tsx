@@ -25,7 +25,7 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
   const locale = (isLocale(params.locale) ? params.locale : "ar") as Locale;
   return (
     <html lang={locale} dir={dir(locale)}>
-      <body className="min-h-screen text-white pt-[16vh] xl:px-44">
+      <body className="min-h-screen text-white pt-[max(16vh,8rem)] xl:px-44">
         <GlobalClickRedirect />
         <SideAds />
         <Header locale={locale} />

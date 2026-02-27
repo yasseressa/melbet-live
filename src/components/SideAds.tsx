@@ -18,18 +18,25 @@ const RIGHT_ADS = [
 function AdCard({
   src,
   alt,
+  fillSlot = false,
 }: {
   src: string;
   alt: string;
+  fillSlot?: boolean;
 }) {
   return (
     <Link
       href={PARTNER_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="block w-full leading-none"
+      className={`block w-full leading-none ${fillSlot ? "h-full" : ""}`}
     >
-      <img src={src} alt={alt} loading="lazy" className="block h-auto w-full" />
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        className={`block w-full ${fillSlot ? "h-full object-contain object-center bg-neutral-900" : "h-auto"}`}
+      />
     </Link>
   );
 }
@@ -52,18 +59,22 @@ export default function SideAds() {
         </div>
       </section>
 
-      <aside className="fixed left-0 top-[16vh] z-40 hidden w-[clamp(8rem,10vw,11rem)] xl:block">
-        <div className="space-y-4">
+      <aside className="fixed left-0 top-[max(16vh,8rem)] bottom-0 z-40 hidden w-44 xl:block">
+        <div className="flex h-full flex-col divide-y divide-neutral-700">
           {LEFT_ADS.map((ad) => (
-            <AdCard key={ad.src} src={ad.src} alt={ad.alt} />
+            <div key={ad.src} className="min-h-0 flex-1">
+              <AdCard src={ad.src} alt={ad.alt} fillSlot />
+            </div>
           ))}
         </div>
       </aside>
 
-      <aside className="fixed right-0 top-[16vh] z-40 hidden w-[clamp(8rem,10vw,11rem)] xl:block">
-        <div className="space-y-4">
+      <aside className="fixed right-0 top-[max(16vh,8rem)] bottom-0 z-40 hidden w-44 xl:block">
+        <div className="flex h-full flex-col divide-y divide-neutral-700">
           {RIGHT_ADS.map((ad) => (
-            <AdCard key={ad.src} src={ad.src} alt={ad.alt} />
+            <div key={ad.src} className="min-h-0 flex-1">
+              <AdCard src={ad.src} alt={ad.alt} fillSlot />
+            </div>
           ))}
         </div>
       </aside>
