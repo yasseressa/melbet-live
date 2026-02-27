@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -19,30 +18,18 @@ const RIGHT_ADS = [
 function AdCard({
   src,
   alt,
-  aspectClass = "aspect-[3/4]",
-  sizes = "240px",
 }: {
   src: string;
   alt: string;
-  aspectClass?: string;
-  sizes?: string;
 }) {
   return (
     <Link
       href={PARTNER_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="block overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900 shadow-lg"
+      className="block w-full leading-none"
     >
-      <div className={`relative w-full ${aspectClass} bg-neutral-950`}>
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          className="object-cover"
-        />
-      </div>
+      <img src={src} alt={alt} loading="lazy" className="block h-auto w-full" />
     </Link>
   );
 }
@@ -53,32 +40,30 @@ export default function SideAds() {
 
   return (
     <>
-      <section className="px-4 pb-4 xl:hidden">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-3 sm:grid-cols-2">
+      <section className="xl:hidden">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           {[...LEFT_ADS, ...RIGHT_ADS].map((ad) => (
             <AdCard
               key={ad.src}
               src={ad.src}
               alt={ad.alt}
-              aspectClass="aspect-[16/9] sm:aspect-[21/9]"
-              sizes="(max-width: 640px) 100vw, 50vw"
             />
           ))}
         </div>
       </section>
 
-      <aside className="fixed left-3 top-[calc(16vh+3rem)] z-40 hidden w-32 2xl:w-44 xl:block">
-        <div className="space-y-3">
+      <aside className="fixed left-0 top-[16vh] z-40 hidden w-[clamp(8rem,10vw,11rem)] xl:block">
+        <div className="space-y-4">
           {LEFT_ADS.map((ad) => (
-            <AdCard key={ad.src} src={ad.src} alt={ad.alt} sizes="(min-width: 1536px) 176px, 128px" />
+            <AdCard key={ad.src} src={ad.src} alt={ad.alt} />
           ))}
         </div>
       </aside>
 
-      <aside className="fixed right-3 top-[calc(16vh+3rem)] z-40 hidden w-32 2xl:w-44 xl:block">
-        <div className="space-y-3">
+      <aside className="fixed right-0 top-[16vh] z-40 hidden w-[clamp(8rem,10vw,11rem)] xl:block">
+        <div className="space-y-4">
           {RIGHT_ADS.map((ad) => (
-            <AdCard key={ad.src} src={ad.src} alt={ad.alt} sizes="(min-width: 1536px) 176px, 128px" />
+            <AdCard key={ad.src} src={ad.src} alt={ad.alt} />
           ))}
         </div>
       </aside>
