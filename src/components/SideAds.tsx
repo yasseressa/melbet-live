@@ -7,13 +7,13 @@ import { usePathname } from "next/navigation";
 const PARTNER_URL = "https://melbet.com/ar/slots/l?tag=d_4974371m_2170c_DAN222";
 
 const LEFT_ADS = [
-  { src: "/ads/game-1.jpg", alt: "Game 1 Ad" },
-  { src: "/ads/game-4.jpg", alt: "Game 4 Ad" },
+  { src: "/ads/game-1.png", alt: "Game 1 Ad" },
+  { src: "/ads/game-4.png", alt: "Game 4 Ad" },
 ];
 
 const RIGHT_ADS = [
-  { src: "/ads/game-2.jpg", alt: "Game 2 Ad" },
-  { src: "/ads/game-3.jpg", alt: "Game 3 Ad" },
+  { src: "/ads/game-2.png", alt: "Game 2 Ad" },
+  { src: "/ads/game-3.png", alt: "Game 3 Ad" },
 ];
 
 function AdCard({
